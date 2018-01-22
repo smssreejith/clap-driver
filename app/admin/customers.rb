@@ -2,7 +2,7 @@ ActiveAdmin.register Customer do
   form do |f|
     f.inputs "Personal Info" do
       f.input :name
-      f.input :sex, as: :radio
+      f.input :sex, as: :radio, collection: ["Male", "Female"]
       f.input :age
     end
     f.inputs "Contact Details" do
@@ -14,7 +14,7 @@ ActiveAdmin.register Customer do
       f.input :location
     end
     f.inputs do
-      f.input :refferal_type, as: :radio
+      f.input :refferal_type, as: :radio, collection: ["Medium", "Person"]
       f.input :refferal
       f.input :executive
     end
@@ -63,18 +63,9 @@ ActiveAdmin.register Customer do
       f.actions
     end
   end
-
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-# permit_params :list, :of, :attributes, :on, :model
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if params[:action] == 'create' && current_user.admin?
-#   permitted
-# end
-
+  controller do
+    def permitted_params
+      params.permit!
+    end
+  end
 end
