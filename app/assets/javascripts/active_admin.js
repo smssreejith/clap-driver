@@ -53,6 +53,8 @@ $(document).on("change", "#booking_customer_id", function(){
     success: function(json){
       $("#booking_contact_number").val(json.contact_number);
       $("#booking_alternate_number").val(json.alternate_number);
+      $("#booking_vehicle_number").val(json.vehicle_number);
+      $("#booking_vehicle_id").val(json.vehicle_id).change();
     }
   })
 });

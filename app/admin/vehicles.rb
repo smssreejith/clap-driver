@@ -6,6 +6,7 @@ ActiveAdmin.register Vehicle do
       f.input :category, as: :radio, collection: ["SUV", "MUV", "Sedan", "Luxury", "Hatchback","Pickup"]
       f.input :gear, as: :radio, collection: ["Manual", "Automatic"]
       f.input :fuel, as: :radio, collection: ["Diesel", "Electric", "Petrol"]
+      f.actions
     end
   end
   controller do

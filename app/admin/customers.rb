@@ -25,6 +25,7 @@ ActiveAdmin.register Customer do
       f.input :current_provider
     end
     f.inputs "Vehicle" do
+      f.input :vehicle
       f.input :vehicle_kind
       f.input :vehicle_no
       f.input :vehicle_brand
