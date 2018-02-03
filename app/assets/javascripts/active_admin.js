@@ -1,14 +1,14 @@
 //= require active_admin/base
 //= require activeadmin_addons/all
 $(document).on("change", "#booking_requirement_start, #booking_requirement_end", function(){
-  if ($("#booking_requirement_start").length && $("#booking_requirement_end").length){
-    var diff = ( new Date($("#booking_requirement_end").val()) - new Date($("#booking_requirement_start").val()) ) / 1000 / 60 / 60; 
+  if ($("#booking_requirement_start").val() && $("#booking_requirement_end").val()){
+    var diff = ( new Date($("#booking_requirement_end").val().replace(/-/g,"/")) - new Date($("#booking_requirement_start").val().replace(/-/g,"/")) ) / 1000 / 60 / 60; 
     $("#booking_duration").val(diff)
   }
 });
 $(document).on("change", "#booking_ride_start, #booking_ride_end", function(){
-  if ($("#booking_ride_start").length && $("#booking_ride_end").length){
-    var diff = ( new Date($("#booking_ride_end").val()) - new Date($("#booking_ride_start").val()) ) / 1000 / 60 / 60; 
+  if ($("#booking_ride_start").val() && $("#booking_ride_end").val()){
+    var diff = ( new Date($("#booking_ride_end").val().replace(/-/g,"/")) - new Date($("#booking_ride_start").val().replace(/-/g,"/")) ) / 1000 / 60 / 60; 
     $("#booking_ride_duration").val(diff)
     $("#booking_on_ride_duration").val(diff)
     if (diff <= 3){
