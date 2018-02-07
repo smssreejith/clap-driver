@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180202022604) do
+ActiveRecord::Schema.define(version: 20180207103845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -201,6 +201,33 @@ ActiveRecord::Schema.define(version: 20180202022604) do
     t.string "traits_driving"
     t.string "traits_route_knowledge"
     t.string "traits_cleanliness"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "plan"
+    t.decimal "daily_charge"
+    t.decimal "monthy_charge"
+    t.bigint "slab_id"
+    t.decimal "amount_pending"
+    t.index ["slab_id"], name: "index_drivers_on_slab_id"
+  end
+
+  create_table "slabs", force: :cascade do |t|
+    t.string "name"
+    t.string "slab_1_from"
+    t.string "slab_1_to"
+    t.decimal "slab_1_amount"
+    t.string "slab_2_from"
+    t.string "slab_2_to"
+    t.decimal "slab_2_amount"
+    t.string "slab_3_from"
+    t.string "slab_3_to"
+    t.decimal "slab_3_amount"
+    t.string "slab_4_from"
+    t.string "slab_4_to"
+    t.decimal "slab_4_amount"
+    t.string "slab_5_from"
+    t.string "slab_5_to"
+    t.decimal "slab_5_amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,0 +1,2 @@
+class Slab < ApplicationRecord
+end

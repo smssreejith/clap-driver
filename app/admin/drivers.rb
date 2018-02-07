@@ -33,6 +33,12 @@ ActiveAdmin.register Driver do
       f.input :traits_driving
       f.input :traits_route_knowledge
       f.input :traits_cleanliness
+    end
+    f.inputs "Plans" do
+      f.input :plan, collection: ["Daily","Hourly","Slab"]
+      f.input :daily_charge
+      f.input :monthy_charge
+      f.input :slab
       f.actions
     end
   end
