@@ -1,5 +1,8 @@
 //= require active_admin/base
 //= require activeadmin_addons/all
+$(document).on("change","#booking_pickup_location", function(){
+  $("#booking_ride_start_point").val($(this).val());
+});
 $(document).on("change","#booking_requirement_start, #booking_requirement_end", function(){
   if ($("#booking_requirement_start").val())
     $("#booking_ride_start").val($("#booking_requirement_start").val());
