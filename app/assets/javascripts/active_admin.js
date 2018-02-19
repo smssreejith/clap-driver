@@ -1,13 +1,14 @@
 //= require active_admin/base
 //= require activeadmin_addons/all
 $(document).on("change","#booking_requirement_start, #booking_requirement_end", function(){
-  if ($("#booking_requirement_start").val() && $("#booking_requirement_end").val()){
+  if ($("#booking_requirement_start").val())
     $("#booking_ride_start").val($("#booking_requirement_start").val());
-    $("#booking_ride_end").val($("#booking_requirement_end").val());
+  if ($("#booking_requirement_start").val() && $("#booking_requirement_end").val()){
+    //$("#booking_ride_end").val($("#booking_requirement_end").val());
     var diff = ( new Date($("#booking_requirement_end").val().replace(/-/g,"/")) - new Date($("#booking_requirement_start").val().replace(/-/g,"/")) ) / 1000 / 60 / 60; 
     $("#booking_duration").val(diff)
-    $("#booking_ride_duration").val(diff)
-    $("#booking_on_ride_duration").val(diff)
+    //$("#booking_ride_duration").val(diff)
+    //$("#booking_on_ride_duration").val(diff)
   }
 });
 $(document).on("change","#booking_ride_start, #booking_ride_end, #booking_post_ride_duration, #booking_ride_amount, #booking_pre_ride_duration_amount, #booking_pre_ride_distance_amount, #booking_post_ride_duration_amount, #booking_post_ride_distace_amount, #booking_food_charges, #booking_accomodation_charges, #booking_toll_parking_charges, #booking_other_charges, #booking_tip_charges, #booking_total_waiver, #booking_clap_waiver, #booking_collected_from_customer", function(){
