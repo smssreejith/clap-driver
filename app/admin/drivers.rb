@@ -35,7 +35,7 @@ ActiveAdmin.register Driver do
       f.input :traits_cleanliness
     end
     f.inputs "Plans" do
-      f.input :plan, collection: ["Daily","Hourly","Slab"]
+      f.input :plan, collection: ["Daily","Monthly","Slab"]
       f.input :daily_charge
       f.input :monthy_charge
       f.input :slab

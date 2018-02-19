@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180207103845) do
+ActiveRecord::Schema.define(version: 20180219020659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,6 +124,15 @@ ActiveRecord::Schema.define(version: 20180207103845) do
     t.index ["vehicle_id"], name: "index_bookings_on_vehicle_id"
   end
 
+  create_table "customer_settlements", force: :cascade do |t|
+    t.bigint "customer_id"
+    t.decimal "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "booking_id"
+    t.index ["customer_id"], name: "index_customer_settlements_on_customer_id"
+  end
+
   create_table "customers", force: :cascade do |t|
     t.string "name"
     t.string "contact_number"
@@ -175,7 +184,17 @@ ActiveRecord::Schema.define(version: 20180207103845) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "vehicle_id"
+    t.decimal "amount_pending"
     t.index ["vehicle_id"], name: "index_customers_on_vehicle_id"
+  end
+
+  create_table "driver_settlements", force: :cascade do |t|
+    t.bigint "driver_id"
+    t.decimal "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "booking_id"
+    t.index ["driver_id"], name: "index_driver_settlements_on_driver_id"
   end
 
   create_table "drivers", force: :cascade do |t|
@@ -245,4 +264,6 @@ ActiveRecord::Schema.define(version: 20180207103845) do
   add_foreign_key "bookings", "customers"
   add_foreign_key "bookings", "drivers"
   add_foreign_key "bookings", "vehicles"
+  add_foreign_key "customer_settlements", "drivers", column: "customer_id"
+  add_foreign_key "driver_settlements", "drivers"
 end

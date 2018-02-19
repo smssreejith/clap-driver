@@ -87,10 +87,10 @@ ActiveAdmin.register Booking do
       f.input :driver_expense # execpt clap waiver #done
       f.input :after_expense_trip  # net_billing - expense #done
       f.input :clap_expenses # clap_waiver #done
-      f.input :agency_share
-      f.input :driver_payment
-      f.input :clap_share # net_billing - driver or agency share
-      f.input :balance # net_billing - collected_from_customer
+      #f.input :agency_share # backend code based on logic
+      #f.input :driver_payment # backend code based on logic
+      #f.input :clap_share # net_billing - driver or agency share
+      #f.input :balance # net_billing - collected_from_customer
       f.input :collection_status, label: "Settlement Status", collection: ["Pending", "Partially Collected", "Collected"] # rename label to settlement status
     end
     f.inputs "Feedback" do
