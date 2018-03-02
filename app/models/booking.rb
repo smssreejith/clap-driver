@@ -2,7 +2,7 @@ class Booking < ApplicationRecord
   belongs_to :customer
   belongs_to :vehicle
   belongs_to :driver
-  before_save :calculate_share
+  after_commit :calculate_share
 
   def calculate_share
     return unless self.ride_status == "Completed"
@@ -10,13 +10,13 @@ class Booking < ApplicationRecord
     customer = Customer.find(self.customer_id) 
     case driver.plan
     when "Daily"
-      self.agency_share = self.after_expense_trip
-      self.driver_payment = self.after_expense_trip 
-      self.clap_share = 0
+      self.agency_share = 0
+      self.driver_payment = 0
+      self.clap_share = self.after_expense_trip
     when "Monthly"
-      self.agency_share = self.after_expense_trip
-      self.driver_payment = self.after_expense_trip
-      self.clap_share = 0
+      self.agency_share = 0
+      self.driver_payment = 0
+      self.clap_share = self.after_expense_trip
     when "Slab"
       share = if driver.slab.slab_1_to.present? and self.after_expense_trip.to_i > driver.slab.slab_1_from.to_i and self.after_expense_trip.to_i < driver.slab.slab_1_to.to_i
                 (driver.slab.slab_1_amount * self.after_expense_trip) / 100
@@ -49,7 +49,7 @@ class Booking < ApplicationRecord
     driver_settlement = DriverSettlement.find_by_booking_id(self.id)
     customer_settlement = CustomerSettlement.find_by_booking_id(self.id)
     if ["Driver", "Agent"].include? self.payment_collected_by
-      amount = self.clap_share - customer_pending_amount
+      amount = customer_pending_amount - self.clap_share
     else
       amount = self.clap_share - self.net_billing
     end

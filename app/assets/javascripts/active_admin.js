@@ -14,7 +14,7 @@ $(document).on("change","#booking_requirement_start, #booking_requirement_end", 
     //$("#booking_on_ride_duration").val(diff)
   }
 });
-$(document).on("change","#booking_ride_start, #booking_ride_end, #booking_post_ride_duration, #booking_ride_amount, #booking_pre_ride_duration_amount, #booking_pre_ride_distance_amount, #booking_post_ride_duration_amount, #booking_post_ride_distace_amount, #booking_food_charges, #booking_accomodation_charges, #booking_toll_parking_charges, #booking_other_charges, #booking_tip_charges, #booking_total_waiver, #booking_clap_waiver, #booking_collected_from_customer", function(){
+$(document).on("change","#booking_ride_start, #booking_ride_end, #booking_pre_ride_duration, #booking_post_ride_duration, #booking_ride_amount, #booking_pre_ride_duration_amount, #booking_pre_ride_distance_amount, #booking_post_ride_duration_amount, #booking_post_ride_distace_amount, #booking_food_charges, #booking_accomodation_charges, #booking_toll_parking_charges, #booking_other_charges, #booking_tip_charges, #booking_total_waiver, #booking_clap_waiver, #booking_collected_from_customer", function(){
   if ($("#booking_ride_start").val() && $("#booking_ride_end").val()){
     var diff = ( new Date($("#booking_ride_end").val().replace(/-/g,"/")) - new Date($("#booking_ride_start").val().replace(/-/g,"/")) ) / 1000 / 60 / 60; 
     $("#booking_ride_duration").val(diff)
@@ -30,8 +30,10 @@ $(document).on("change","#booking_ride_start, #booking_ride_end, #booking_post_r
       $("#booking_on_ride_amount").val(diff * 100);
     }
   }
-  if ($("#booking_post_ride_duration_amount").val())
-    $("#booking_post_ride_duration_amount").val((parseInt($(this).val()) || 0) * 100);
+  if ($("#booking_post_ride_duration").val())
+    $("#booking_post_ride_duration_amount").val((parseInt($("#booking_post_ride_duration").val()) || 0) * 100);
+  if ($("#booking_pre_ride_duration").val())
+    $("#booking_pre_ride_duration_amount").val((parseInt($("#booking_pre_ride_duration").val()) || 0) * 100);
   var total = (parseInt($("#booking_on_ride_amount").val()) || 0) + (parseInt($("#booking_pre_ride_duration_amount").val()) || 0) + (parseInt($("#booking_pre_ride_distance_amount").val()) || 0) + (parseInt($("#booking_post_ride_duration_amount").val()) || 0) + (parseInt($("#booking_post_ride_distance_amount").val()) || 0) + (parseInt($("#booking_food_charges").val()) || 0) + (parseInt($("#booking_accomodation_charges").val()) || 0) + (parseInt($("#booking_toll_parking_charges").val()) || 0) + (parseInt($("#booking_other_charges").val()) || 0) + (parseInt($("#booking_tip_charges").val()) || 0) - (parseInt($("#booking_total_waiver").val()) || 0) - (parseInt($("#booking_clap_waiver").val()) || 0);
   var expense = (parseInt($("#booking_pre_ride_duration_amount").val()) || 0) + (parseInt($("#booking_post_ride_duration_amount").val()) || 0) + (parseInt($("#booking_food_charges").val()) || 0) + (parseInt($("#booking_accomodation_charges").val()) || 0) + (parseInt($("#booking_toll_parking_charges").val()) || 0) + (parseInt($("#booking_total_waiver").val()) || 0) + (parseInt($("#booking_clap_waiver").val()) || 0);
   var driver_expense = expense - (parseInt($("#booking_clap_waiver").val()) || 0);
