@@ -10,13 +10,13 @@ class Booking < ApplicationRecord
     customer = Customer.find(self.customer_id) 
     case driver.plan
     when "Daily"
-      self.agency_share = 0
-      self.driver_payment = 0
-      self.clap_share = self.after_expense_trip
+      self.agency_share = self.after_expense_trip
+      self.driver_payment = self.after_expense_trip
+      self.clap_share = 0
     when "Monthly"
-      self.agency_share = 0
-      self.driver_payment = 0
-      self.clap_share = self.after_expense_trip
+      self.agency_share = self.after_expense_trip
+      self.driver_payment = self.after_expense_trip
+      self.clap_share = 0
     when "Slab"
       share = if driver.slab.slab_1_to.present? and self.after_expense_trip.to_i > driver.slab.slab_1_from.to_i and self.after_expense_trip.to_i < driver.slab.slab_1_to.to_i
                 (driver.slab.slab_1_amount * self.after_expense_trip) / 100
@@ -37,11 +37,15 @@ class Booking < ApplicationRecord
     if driver.plan == "Daily"
       ride_start = self.ride_start.strftime("%Y%m%d").to_i
       ride_end = self.ride_end.strftime("%Y%m%d").to_i
-      daily_amount = (ride_end - ride_start + 1) * driver.daily_charge
+      daily_amount = - ((ride_end - ride_start + 1) * driver.daily_charge)
       DriverSettlement.create(booking_id: 0, driver_id: self.driver_id, amount: daily_amount)
-    elsif driver.plan == "Monthly"
+    elsif driver.plan == "Salaried"
       unless DriverSettlement.where(booking_id: 0).last.created_at.strftime("%Y%m") == Time.now.strftime("%Y%m")
         DriverSettlement.create(booking_id: 0, driver_id: self.driver_id, amount: driver.monthly_charge)
+      end
+    elsif driver.plan == "Monthly"
+      unless DriverSettlement.where(booking_id: 0).last.created_at.strftime("%Y%m") == Time.now.strftime("%Y%m")
+        DriverSettlement.create(booking_id: 0, driver_id: self.driver_id, amount: - driver.monthly_charge)
       end
     end
 
