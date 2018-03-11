@@ -46,7 +46,7 @@ $(document).on("change","#booking_ride_start, #booking_ride_end, #booking_pre_ri
   $("#booking_expense").val(expense);
   $("#booking_driver_expense").val(driver_expense);
   $("#booking_after_expense_trip").val(total - expense_after);
-  $("#booking_clap_expenses").val((parseInt($("#booking_clap_waiver").val())|| 0));
+  $("#booking_clap_expenses").val((parseInt($("#booking_clap_waiver").val())|| 0) + (parseInt($("#booking_total_waiver").val())/2));
   $("#booking_balance").val(total - (parseInt($("#booking_collected_from_customer").val())));
   if (($("#booking_collected_from_customer").val() < total) && ($("#booking_collected_from_customer").val() > 0)) {
     $("#booking_collection_status").val("Partially Collected").change();

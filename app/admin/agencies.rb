@@ -1,20 +1,21 @@
-ActiveAdmin.register CustomerSettlement do
+ActiveAdmin.register Agency do
   index do
     selectable_column
     column :id
-    column :customer
-    column :amount do |amt|
-      amt.amount.abs
+    column :name
+    column :contact_number
+    column :alternate_number
+    column :amount_pending do |amt|
+      amt.amount_pending.abs
     end
-    column "TO" do |settlement|
-      if settlement.amount < 0
-        message = "Customer"
-      else
+    column "TO" do |amt|
+      if amt.amount_pending < 0
         message = "Clap"
+      else
+        message = "Agency"
       end
       "#{message}"
     end
-    column :booking_id
     actions
   end
 # See permitted parameters documentation:
@@ -29,5 +30,9 @@ ActiveAdmin.register CustomerSettlement do
 #   permitted << :other if params[:action] == 'create' && current_user.admin?
 #   permitted
 # end
-
+  controller do
+    def permitted_params
+      params.permit!
+    end
+  end
 end

@@ -39,13 +39,19 @@ class Booking < ApplicationRecord
       ride_end = self.ride_end.strftime("%Y%m%d").to_i
       daily_amount = - ((ride_end - ride_start + 1) * driver.daily_charge)
       DriverSettlement.create(booking_id: 0, driver_id: self.driver_id, amount: daily_amount)
+      driver.update_attributes(amount_pending: (driver.amount_pending.to_i + daily_amount))
+      driver.agency.update_attributes(amount_pending: (driver.agency.amount_pending.to_i + daily_amount))
     elsif driver.plan == "Salaried"
       unless DriverSettlement.where(booking_id: 0).last.created_at.strftime("%Y%m") == Time.now.strftime("%Y%m")
         DriverSettlement.create(booking_id: 0, driver_id: self.driver_id, amount: driver.monthly_charge)
+        driver.update_attributes(amount_pending: (driver.amount_pending.to_i + driver.monthly_charge))
+        driver.agency.update_attributes(amount_pending: (driver.agency.amount_pending.to_i + driver.monthly_charge))
       end
     elsif driver.plan == "Monthly"
       unless DriverSettlement.where(booking_id: 0).last.created_at.strftime("%Y%m") == Time.now.strftime("%Y%m")
         DriverSettlement.create(booking_id: 0, driver_id: self.driver_id, amount: - driver.monthly_charge)
+        driver.update_attributes(amount_pending: (driver.amount_pending.to_i - driver.monthly_charge))
+        driver.agency.update_attributes(amount_pending: (driver.agency.amount_pending.to_i - driver.monthly_charge))
       end
     end
 
@@ -61,6 +67,7 @@ class Booking < ApplicationRecord
       DriverSettlement.create(booking_id: self.id, driver_id: self.driver_id, amount: amount)
       CustomerSettlement.create(booking_id: self.id, customer_id: self.customer_id, amount: customer_pending_amount)
       driver.update_attributes(amount_pending: (driver.amount_pending.to_i + amount))
+      driver.agency.update_attributes(amount_pending: (driver.agency.amount_pending.to_i + amount))
       customer.update_attributes(amount_pending: (customer.amount_pending.to_i + customer_pending_amount))
     else
       previous_amount_driver = driver_settlement.amount
@@ -70,6 +77,7 @@ class Booking < ApplicationRecord
       customer_settlement.update_attributes(booking_id: self.id, customer_id: self.customer_id, amount: customer_pending_amount)
 
       driver.update_attributes(amount_pending: (driver.amount_pending.to_i + amount - previous_amount_driver))
+      driver.agency.update_attributes(amount_pending: (driver.agency.amount_pending.to_i + amount - previous_amount_driver))
       customer.update_attributes(amount_pending: (customer.amount_pending.to_i + customer_pending_amount - previous_amount_customer))
     end
   end

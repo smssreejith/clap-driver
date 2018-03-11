@@ -11,11 +11,9 @@ ActiveAdmin.register Driver do
       f.input :location
       f.input :district
     end
-    f.inputs "Agenct" do
+    f.inputs "Agency" do
       f.input :agency
-      f.input :old_agency
-      f.input :agency_contact_number
-      f.input :agency_alternated_number
+      f.input :old_agency, collection: [Agency.all]
     end
     f.inputs do
       f.input :enrollment_status

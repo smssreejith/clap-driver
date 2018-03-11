@@ -1,4 +1,22 @@
 ActiveAdmin.register DriverSettlement do
+  index do
+    selectable_column
+    column :id
+    column :driver
+    column :amount do |amt|
+      amt.amount.abs
+    end
+    column "TO" do |settlement|
+      if settlement.amount > 0
+        message = "Driver"
+      else
+        message = "Clap"
+      end
+      "#{message}"
+    end
+    column :booking_id
+    actions
+  end
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #

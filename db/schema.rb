@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180219020659) do
+ActiveRecord::Schema.define(version: 20180311152837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,15 @@ ActiveRecord::Schema.define(version: 20180219020659) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  end
+
+  create_table "agencies", force: :cascade do |t|
+    t.string "name"
+    t.string "contact_number"
+    t.string "alternate_number"
+    t.decimal "amount_pending"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "bookings", force: :cascade do |t|
@@ -199,7 +208,6 @@ ActiveRecord::Schema.define(version: 20180219020659) do
 
   create_table "drivers", force: :cascade do |t|
     t.string "name"
-    t.string "agency"
     t.string "old_agency"
     t.string "enrollment_status"
     t.string "reference"
@@ -209,8 +217,6 @@ ActiveRecord::Schema.define(version: 20180219020659) do
     t.string "district"
     t.string "contact_number"
     t.string "alternate_contact"
-    t.string "agency_contact_number"
-    t.string "agency_alternated_number"
     t.string "general_review"
     t.string "rating"
     t.text "notes"
@@ -227,6 +233,7 @@ ActiveRecord::Schema.define(version: 20180219020659) do
     t.decimal "monthy_charge"
     t.bigint "slab_id"
     t.decimal "amount_pending"
+    t.integer "agency_id"
     t.index ["slab_id"], name: "index_drivers_on_slab_id"
   end
 
