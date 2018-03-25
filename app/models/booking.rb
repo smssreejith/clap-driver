@@ -47,6 +47,13 @@ class Booking < ApplicationRecord
         driver.update_attributes(amount_pending: (driver.amount_pending.to_i + driver.monthly_charge))
         driver.agency.update_attributes(amount_pending: (driver.agency.amount_pending.to_i + driver.monthly_charge))
       end
+    elsif driver.plan == "Fixed"
+      ride_start = self.ride_start.strftime("%Y%m%d").to_i
+      ride_end = self.ride_end.strftime("%Y%m%d").to_i
+      daily_amount = - driver.daily_charge
+      DriverSettlement.create(booking_id: 0, driver_id: self.driver_id, amount: daily_amount)
+      driver.update_attributes(amount_pending: (driver.amount_pending.to_i + daily_amount))
+      driver.agency.update_attributes(amount_pending: (driver.agency.amount_pending.to_i + daily_amount))
     elsif driver.plan == "Monthly"
       unless DriverSettlement.where(booking_id: 0).last.created_at.strftime("%Y%m") == Time.now.strftime("%Y%m")
         DriverSettlement.create(booking_id: 0, driver_id: self.driver_id, amount: - driver.monthly_charge)
