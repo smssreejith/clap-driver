@@ -43,7 +43,7 @@ ActiveAdmin.register Booking do
       f.input :driver_food_accomodation
     end
     f.inputs "Ride Details" do
-      f.input :driver_text_info
+      f.input :ride_type, collection: ["Continous", "Trip"], selected: "Continous"
       # update from requirement
       f.input :ride_start_point
       f.input :ride_reporting_time, as: :date_time_picker
@@ -59,6 +59,7 @@ ActiveAdmin.register Booking do
       f.input :ride_driver_transport_start_amount
       f.input :ride_driver_transport_drop_medium
       f.input :ride_driver_transport_drop_amount
+      f.input :driver_text_info
     end
     f.inputs "Total Revenue" do
       f.input :on_ride_duration #ride_end - ride_start #done

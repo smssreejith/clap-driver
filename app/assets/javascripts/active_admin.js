@@ -14,24 +14,57 @@ $(document).on("change","#booking_requirement_start, #booking_requirement_end", 
     //$("#booking_on_ride_duration").val(diff)
   }
 });
-$(document).on("change","#booking_ride_start, #booking_ride_end, #booking_pre_ride_duration, #booking_post_ride_duration, #booking_ride_amount, #booking_pre_ride_duration_amount, #booking_pre_ride_distance_amount, #booking_post_ride_duration_amount, #booking_post_ride_distance_amount, #booking_food_charges, #booking_accomodation_charges, #booking_toll_parking_charges, #booking_other_charges, #booking_tip_charges, #booking_total_waiver, #booking_clap_waiver, #booking_collected_from_customer, #booking_collected_from_customer", function(){
+$(document).on("change","#booking_ride_start, #booking_ride_end, #booking_pre_ride_duration, #booking_post_ride_duration, #booking_ride_amount, #booking_pre_ride_duration_amount, #booking_pre_ride_distance_amount, #booking_post_ride_duration_amount, #booking_post_ride_distance_amount, #booking_food_charges, #booking_accomodation_charges, #booking_toll_parking_charges, #booking_other_charges, #booking_tip_charges, #booking_total_waiver, #booking_clap_waiver, #booking_collected_from_customer, #booking_collected_from_customer, #booking_ride_type", function(){
   if ($("#booking_ride_start").val() && $("#booking_ride_end").val()){
-    var diff = ( new Date($("#booking_ride_end").val().replace(/-/g,"/")) - new Date($("#booking_ride_start").val().replace(/-/g,"/")) ) / 1000 / 60 / 60; 
-    $("#booking_ride_duration").val(diff)
-    $("#booking_on_ride_duration").val(diff)
-    if (diff <= 3){
-      if ($("#booking_ride_start").val().split(" ")[1].split(":")[0] > 8 && $("#booking_ride_start").val().split(" ")[1].split(":")[0] < 18)
-        $("#booking_on_ride_amount").val("300");
-      if ($("#booking_ride_start").val().split(" ")[1].split(":")[0] > 18)
-        $("#booking_on_ride_amount").val("400");
-      if ($("#booking_ride_start").val().split(" ")[1].split(":")[0] < 6)
-        $("#booking_on_ride_amount").val("400");
+    if ($("#booking_ride_type").val() === "Trip") {
+      var ride_end = new Date($("#booking_ride_end").val().replace(/-/g,"/"));
+      var ride_start = new Date($("#booking_ride_start").val().replace(/-/g,"/"));
+      var ride_start_mid = new Date($("#booking_ride_start").val().replace(/-/g,"/"));
+      var ride_start_six = new Date($("#booking_ride_start").val().split(" ")[0] + " " + "18:00:00");
+      ride_start_mid.setDate(ride_start_mid.getDate() + 1);
+      ride_start_mid.setHours(0,0,0,0);
+      var ride_start_mid = new Date($("#booking_ride_start").val().split(" ")[0] + " " + "00:00:00");
+      var ride_end_mid = new Date($("#booking_ride_start").val().split(" ")[0] + " " + "00:00:00");
+      var ride_end_ten = new Date($("#booking_ride_end").val().split(" ")[0] + " " + "22:00:00");
+      var ride_end_five = new Date($("#booking_ride_end").val().split(" ")[0] + " " + "05:00:00");
+      if (ride_start < ride_start_six) {
+        var pre_amount = 1000;
+      } else {
+        diff = ( ride_start_mid- ride_start ) / 1000 / 60 / 60;
+        var pre_amount = diff * 100;
+      }
+      var trip_diff = (ride_end_mid - ride_start_mid) /60 / 60 / 24;
+      var trip_amount = (trip_diff + 1) * 1000; 
+      if (ride_end > ride_end_five && ride_end < ride_end_ten) {
+        var post_amount = 1000;
+      } else {
+        if (ride_end < ride_end_ten) {
+          var diff = (ride_end - ride_end_ten.setDate(ride_end_ten.getDate() - 1)) / 1000 / 60 / 60;
+          var post_amount = diff * 100;
+        } else {
+          var diff = (ride_end - ride_end_ten) / 1000 / 60 / 60;
+          var post_amount = diff * 100;
+        }
+      }
+      $("#booking_on_ride_amount").val(pre_amount + trip_amount + post_amount);
     } else {
-      $("#booking_on_ride_amount").val(diff * 100);
-    }
-    if (diff > 7){
-      var discount = ((parseInt(diff/4) - 1) * 100)
-      $("#booking_on_ride_amount").val($("#booking_on_ride_amount").val() - discount);
+      var diff = ( new Date($("#booking_ride_end").val().replace(/-/g,"/")) - new Date($("#booking_ride_start").val().replace(/-/g,"/")) ) / 1000 / 60 / 60; 
+      $("#booking_ride_duration").val(diff)
+      $("#booking_on_ride_duration").val(diff)
+      if (diff <= 3){
+        if ($("#booking_ride_start").val().split(" ")[1].split(":")[0] > 8 && $("#booking_ride_start").val().split(" ")[1].split(":")[0] < 18)
+          $("#booking_on_ride_amount").val("300");
+        if ($("#booking_ride_start").val().split(" ")[1].split(":")[0] > 18)
+          $("#booking_on_ride_amount").val("400");
+        if ($("#booking_ride_start").val().split(" ")[1].split(":")[0] < 6)
+          $("#booking_on_ride_amount").val("400");
+      } else {
+        $("#booking_on_ride_amount").val(diff * 100);
+      }
+      if (diff > 7){
+        var discount = ((parseInt(diff/4) - 1) * 100)
+        $("#booking_on_ride_amount").val($("#booking_on_ride_amount").val() - discount);
+      }
     }
   }
   if ($("#booking_post_ride_duration").val())
