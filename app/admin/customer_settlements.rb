@@ -7,7 +7,7 @@ ActiveAdmin.register CustomerSettlement do
       amt.amount&.abs
     end
     column "TO" do |settlement|
-      if settlement.amount < 0
+      if settlement.amount.to_i < 0
         message = "Customer"
       else
         message = "Clap"

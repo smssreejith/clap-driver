@@ -9,7 +9,7 @@ ActiveAdmin.register Agency do
       amt.amount_pending&.abs
     end
     column "TO" do |amt|
-      if amt.amount_pending < 0
+      if amt.amount_pending.to_i < 0
         message = "Clap"
       else
         message = "Agency"

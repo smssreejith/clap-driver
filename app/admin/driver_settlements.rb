@@ -7,7 +7,7 @@ ActiveAdmin.register DriverSettlement do
       amt.amount&.abs
     end
     column "TO" do |settlement|
-      if settlement.amount > 0
+      if settlement.amount.to_i > 0
         message = "Driver"
       else
         message = "Clap"
