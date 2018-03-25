@@ -2,7 +2,7 @@ class Booking < ApplicationRecord
   belongs_to :customer
   belongs_to :vehicle
   belongs_to :driver
-  after_commit :calculate_share
+  after_commit :calculate_share, on: [:update, :create]
 
   def calculate_share
     return unless self.ride_status == "Completed"
