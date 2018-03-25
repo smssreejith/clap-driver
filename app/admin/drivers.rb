@@ -13,10 +13,11 @@ ActiveAdmin.register Driver do
     end
     f.inputs "Agency" do
       f.input :agency
-      f.input :old_agency, collection: [Agency.all]
+      f.input :old_agency, collection: Agency.all.map{|x| [x.name, x.id]}
     end
     f.inputs do
-      f.input :enrollment_status
+      f.input :enrollment_status,
+        collection: ["On hold", "Awaiting Doc", "Completed","Rejected","Blacklisted"]
       f.input :reference
     end
     f.inputs "Feedback" do
