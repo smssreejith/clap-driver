@@ -47,7 +47,7 @@ class Booking < ApplicationRecord
         driver.update_attributes(amount_pending: (driver.amount_pending.to_i + driver.monthly_charge))
         driver.agency.update_attributes(amount_pending: (driver.agency.amount_pending.to_i + driver.monthly_charge))
       end
-    elsif driver.plan == "Fixed"
+    elsif driver.plan == "Fixed per ride"
       ride_start = self.ride_start.strftime("%Y%m%d").to_i
       ride_end = self.ride_end.strftime("%Y%m%d").to_i
       daily_amount = - driver.daily_charge
