@@ -6,7 +6,7 @@ ActiveAdmin.register Agency do
     column :contact_number
     column :alternate_number
     column :amount_pending do |amt|
-      amt.amount_pending.abs
+      amt.amount_pending&.abs
     end
     column "TO" do |amt|
       if amt.amount_pending < 0

@@ -4,7 +4,7 @@ ActiveAdmin.register CustomerSettlement do
     column :id
     column :customer
     column :amount do |amt|
-      amt.amount.abs
+      amt.amount&.abs
     end
     column "TO" do |settlement|
       if settlement.amount < 0
