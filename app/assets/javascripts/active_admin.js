@@ -62,7 +62,9 @@ $(document).on("change","#booking_ride_start, #booking_ride_end, #booking_pre_ri
         $("#booking_on_ride_amount").val(diff * 100);
       }
       if (diff > 7){
-        var discount = ((parseInt(diff/4) - 1) * 100)
+        var discount_total = ((parseInt(diff/4) - 1) * 100);
+        var dicount_minus = ((parseInt(diff/12)) * 100);
+        var discount = discount_total - dicount_minus;
         $("#booking_on_ride_amount").val($("#booking_on_ride_amount").val() - discount);
       }
     }
