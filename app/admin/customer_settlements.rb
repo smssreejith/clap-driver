@@ -30,4 +30,9 @@ ActiveAdmin.register CustomerSettlement do
 #   permitted
 # end
 
+  controller do
+    def permitted_params
+      params.permit!
+    end
+  end
 end
