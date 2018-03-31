@@ -82,5 +82,26 @@ Driver.create([
 ])
 
 vehicle = Vehicle.create(name: "Swift Desire", kind: "Four Wheeler", category: "Sedan", gear: "Manual", fuel: "Petrol")
+nissan = Vehicle.create(name: "Nissan Sunny", kind: "Four Wheeler", category: "Sedan", gear: "Automatic", fuel: "Petrol")
+audi = Vehicle.create(name: "Audi - Q5", kind: "Four Wheeler", category: "Sedan", gear: "Automatic", fuel: "Petrol")
 
-Customer.create(name: "Amal Fra", contact_number: "98732984732", vehicle: vehicle)
+Customer.create([
+  {
+    name: "Amal Fra",
+    contact_number: "98732984732",
+    vehicle: vehicle
+  },
+  {
+    name: "Diya",
+    sex: "Female",
+    contact_number: "719740173",
+    vehicle: nissan
+  },
+  {
+    name: "Amjad",
+    sex: "Male",
+    contact_number: "91720211238",
+    vehicle: audi,
+    requirement: "Black Shirt"
+  }
+])
