@@ -112,6 +112,7 @@ $(document).on("change", "#booking_customer_id", function(){
       $("#booking_alternate_number").val(json.alternate_number);
       $("#booking_vehicle_number").val(json.vehicle_number);
       $("#booking_vehicle_id").val(json.vehicle).change();
+      $("#booking_additional_requirement").val(json.requirement);
     }
   })
 });
