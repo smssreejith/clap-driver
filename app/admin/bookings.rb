@@ -79,6 +79,7 @@ ActiveAdmin.register Booking do
       f.input :tip_charges
       f.input :total_waiver, label: "Clap + Driver Waiver" #(label clap + driver)
       f.input :clap_waiver
+      f.input :discount
       f.input :net_billing # above amount - total waiver - clap waiver
     end
     f.inputs "Payments" do

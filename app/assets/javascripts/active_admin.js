@@ -17,6 +17,10 @@ $(document).on("change","#booking_requirement_start, #booking_requirement_end", 
 $(document).on("change","#booking_ride_start, #booking_ride_end, #booking_pre_ride_duration, #booking_post_ride_duration, #booking_ride_amount, #booking_pre_ride_duration_amount, #booking_pre_ride_distance_amount, #booking_post_ride_duration_amount, #booking_post_ride_distance_amount, #booking_food_charges, #booking_accomodation_charges, #booking_toll_parking_charges, #booking_other_charges, #booking_tip_charges, #booking_total_waiver, #booking_clap_waiver, #booking_collected_from_customer, #booking_collected_from_customer, #booking_ride_type", function(){
   if ($("#booking_ride_start").val() && $("#booking_ride_end").val()){
     if ($("#booking_ride_type").val() === "Trip") {
+      $("#booking_discount").val(0);
+      var diff = ( new Date($("#booking_ride_end").val().replace(/-/g,"/")) - new Date($("#booking_ride_start").val().replace(/-/g,"/")) ) / 1000 / 60 / 60; 
+      $("#booking_ride_duration").val(diff)
+      $("#booking_on_ride_duration").val(diff)
       var ride_end = new Date($("#booking_ride_end").val().replace(/-/g,"/"));
       var ride_start = new Date($("#booking_ride_start").val().replace(/-/g,"/"));
       var ride_start_mid = new Date($("#booking_ride_start").val().replace(/-/g,"/"));
@@ -30,7 +34,7 @@ $(document).on("change","#booking_ride_start, #booking_ride_end, #booking_pre_ri
       if (ride_start < ride_start_six) {
         var pre_amount = 1000;
       } else {
-        diff = ( ride_start_mid- ride_start ) / 1000 / 60 / 60;
+        diff = ( ride_start_mid - ride_start ) / 1000 / 60 / 60;
         var pre_amount = diff * 100;
       }
       var trip_diff = (ride_end_mid - ride_start_mid) /60 / 60 / 24;
@@ -51,6 +55,7 @@ $(document).on("change","#booking_ride_start, #booking_ride_end, #booking_pre_ri
       var diff = ( new Date($("#booking_ride_end").val().replace(/-/g,"/")) - new Date($("#booking_ride_start").val().replace(/-/g,"/")) ) / 1000 / 60 / 60; 
       $("#booking_ride_duration").val(diff)
       $("#booking_on_ride_duration").val(diff)
+      //diff = diff + ( parseInt($("#booking_pre_ride_duration").val()) || 0) + ( parseInt($("#booking_post_ride_duration").val()) || 0);
       if (diff <= 3){
         if ($("#booking_ride_start").val().split(" ")[1].split(":")[0] > 8 && $("#booking_ride_start").val().split(" ")[1].split(":")[0] < 18)
           $("#booking_on_ride_amount").val("300");
@@ -61,13 +66,14 @@ $(document).on("change","#booking_ride_start, #booking_ride_end, #booking_pre_ri
       } else {
         $("#booking_on_ride_amount").val(diff * 100);
       }
+      diff = diff + ( parseInt($("#booking_pre_ride_duration").val()) || 0) + ( parseInt($("#booking_post_ride_duration").val()) || 0);
       if (diff > 7){
         var discount_minus = ((parseInt(diff/12)) * 200);
         rem = diff % 12;
         var more = 0;
         if (rem > 7)
           more = 100;
-        $("#booking_on_ride_amount").val(discount_minus + more);
+        $("#booking_discount").val(discount_minus + more );
       }
     }
   }
@@ -75,7 +81,7 @@ $(document).on("change","#booking_ride_start, #booking_ride_end, #booking_pre_ri
     $("#booking_post_ride_duration_amount").val((parseInt($("#booking_post_ride_duration").val()) || 0) * 100);
   if ($("#booking_pre_ride_duration").val())
     $("#booking_pre_ride_duration_amount").val((parseInt($("#booking_pre_ride_duration").val()) || 0) * 100);
-  var total = (parseInt($("#booking_on_ride_amount").val()) || 0) + (parseInt($("#booking_pre_ride_duration_amount").val()) || 0) + (parseInt($("#booking_pre_ride_distance_amount").val()) || 0) + (parseInt($("#booking_post_ride_duration_amount").val()) || 0) + (parseInt($("#booking_post_ride_distance_amount").val()) || 0) + (parseInt($("#booking_food_charges").val()) || 0) + (parseInt($("#booking_accomodation_charges").val()) || 0) + (parseInt($("#booking_toll_parking_charges").val()) || 0) + (parseInt($("#booking_other_charges").val()) || 0) + (parseInt($("#booking_tip_charges").val()) || 0) - (parseInt($("#booking_total_waiver").val()) || 0) - (parseInt($("#booking_clap_waiver").val()) || 0);
+  var total = (parseInt($("#booking_on_ride_amount").val()) || 0) + (parseInt($("#booking_pre_ride_duration_amount").val()) || 0) + (parseInt($("#booking_pre_ride_distance_amount").val()) || 0) + (parseInt($("#booking_post_ride_duration_amount").val()) || 0) + (parseInt($("#booking_post_ride_distance_amount").val()) || 0) + (parseInt($("#booking_food_charges").val()) || 0) + (parseInt($("#booking_accomodation_charges").val()) || 0) + (parseInt($("#booking_toll_parking_charges").val()) || 0) + (parseInt($("#booking_other_charges").val()) || 0) + (parseInt($("#booking_tip_charges").val()) || 0) - (parseInt($("#booking_total_waiver").val()) || 0) - (parseInt($("#booking_clap_waiver").val()) || 0) - (parseInt($("#booking_discount").val()) || 0);
   var expense = (parseInt($("#booking_pre_ride_distance_amount").val()) || 0) + (parseInt($("#booking_post_ride_distance_amount").val()) || 0) + (parseInt($("#booking_food_charges").val()) || 0) + (parseInt($("#booking_accomodation_charges").val()) || 0) + (parseInt($("#booking_toll_parking_charges").val()) || 0) + (parseInt($("#booking_total_waiver").val()) || 0) + (parseInt($("#booking_clap_waiver").val()) || 0);
   var expense_after = (parseInt($("#booking_pre_ride_distance_amount").val()) || 0) + (parseInt($("#booking_post_ride_distance_amount").val()) || 0) + (parseInt($("#booking_food_charges").val()) || 0) + (parseInt($("#booking_accomodation_charges").val()) || 0) + (parseInt($("#booking_toll_parking_charges").val()) || 0);
   var driver_expense = expense - (parseInt($("#booking_clap_waiver").val()) || 0);
@@ -83,8 +89,8 @@ $(document).on("change","#booking_ride_start, #booking_ride_end, #booking_pre_ri
   $("#booking_expense").val(expense);
   $("#booking_driver_expense").val(driver_expense);
   $("#booking_after_expense_trip").val(total - expense_after);
-  $("#booking_clap_expenses").val((parseInt($("#booking_clap_waiver").val())|| 0) + (parseInt($("#booking_total_waiver").val())/2));
-  $("#booking_balance").val(total - (parseInt($("#booking_collected_from_customer").val())));
+  $("#booking_clap_expenses").val((parseInt($("#booking_clap_waiver").val())|| 0) + (( parseInt($("#booking_total_waiver").val()) || 0)/2));
+  $("#booking_balance").val(total - (parseInt($("#booking_collected_from_customer").val()) || 0));
   if (($("#booking_collected_from_customer").val() < total) && ($("#booking_collected_from_customer").val() > 0)) {
     $("#booking_collection_status").val("Partially Collected").change();
   } else if ($("#booking_collected_from_customer").val() >= total) {
