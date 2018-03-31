@@ -53,7 +53,7 @@ ActiveAdmin.register Booking do
       f.input :ride_touch_points_location
       f.input :ride_end_point
       f.input :ride_no_of_passengers
-      f.input :driver
+      f.input :driver, selected: Driver.find_by_name("Unassigned")&.id
       f.input :ride_agency
       f.input :ride_driver_transport_start_medium
       f.input :ride_driver_transport_start_amount

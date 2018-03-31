@@ -8,6 +8,9 @@
 
 Slab.create([
   {
+    name: "None",
+  },
+  {
     name: "Generic",
     slab_1_from: "0",
     slab_1_to: "399",
@@ -34,9 +37,6 @@ Slab.create([
     slab_3_to: "99999999999",
     slab_3_amount: 20,
   },
-  {
-    name: "None",
-  }
 ])
 
 clap_agency = Agency.create(name: "Clap", contact_number: "4545454")
@@ -44,6 +44,11 @@ raghu_agency = Agency.create(name: "Raghu", contact_number: "4545454")
 pramod_agency = Agency.create(name: "Pramod", contact_number: "4545454")
 
 Driver.create([
+  {
+    name: "Unassigned",
+    slab: Slab.find_by_name("None"),
+    agency: clap_agency,
+  },
   {
     name: "Maru",
     age: "33",
@@ -82,8 +87,8 @@ Driver.create([
 ])
 
 vehicle = Vehicle.create(name: "Swift Desire", kind: "Four Wheeler", category: "Sedan", gear: "Manual", fuel: "Petrol")
-nissan = Vehicle.create(name: "Nissan Sunny", kind: "Four Wheeler", category: "Sedan", gear: "Automatic", fuel: "Petrol")
-audi = Vehicle.create(name: "Audi - Q5", kind: "Four Wheeler", category: "Sedan", gear: "Automatic", fuel: "Petrol")
+nissan = Vehicle.create(name: "Nissan Sunny", kind: "Four Wheeler", category: "Sedan", gear: "Automatic", fuel: "Diesel")
+audi = Vehicle.create(name: "Audi - Q5", kind: "Four Wheeler", category: "Luxury", gear: "Automatic", fuel: "Diesel")
 
 Customer.create([
   {
