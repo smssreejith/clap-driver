@@ -109,3 +109,15 @@ $(document).on("change", "#booking_customer_id", function(){
     }
   })
 });
+$(document).on("change", "#booking_driver_id", function(){
+  $.ajax({
+    type: "post",
+    url: "/home/driver_details.json",
+    data: {
+      driver_id: $(this).val()
+    },
+    success: function(json){
+      $("#booking_ride_agency").val(json.agency);
+    }
+  })
+});
