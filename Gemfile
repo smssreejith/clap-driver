@@ -13,6 +13,7 @@ gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 gem 'activeadmin'
 gem 'activeadmin_addons'
+gem 'active_admin_import'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end

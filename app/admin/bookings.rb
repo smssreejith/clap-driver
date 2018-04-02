@@ -1,4 +1,40 @@
 ActiveAdmin.register Booking do
+  active_admin_import validate: true,
+    headers_rewrites: {
+      'Customer': :customer_id,
+      'Ride Status': :ride_status,
+      'Contact Number': :contact_number,
+      'Ride Start': :ride_start,
+      'Ride End': :ride_end,
+      'Driver': :driver_id,
+      'Pre Ride Amount': :pre_ride_distance_amount,
+      'Post Ride Amount': :post_ride_distance_amount,
+      'Food Charges': :food_charges,
+      'Accomodation Charges': :accomodation_charges,
+      'Toll/Parking': :toll_parking_charges,
+      'Other Charges': :other_charges,
+      'Tip': :tip_charges,
+      'Clap+Driver Waiver': :total_waiver,
+      'Clap Waiver': :clap_waiver,
+      'Payment Collected by': :payment_collected_by,
+      'Amount Collected from Customer': :collected_from_customer,
+      'Vehicle': :vehicle_id
+    },
+  before_batch_import: ->(importer) {
+    customer_names = importer.values_at(:customer_id)
+    customers = Customer.where(name: customer_names)
+    customer_options = Hash[*customers.pluck(:name, :id).flatten]
+    importer.batch_replace(:customer_id, customer_options)
+    driver_names = importer.values_at(:driver_id)
+    drivers = Driver.where(name: driver_names)
+    driver_options = Hash[*drivers.pluck(:name, :id).flatten]
+    importer.batch_replace(:driver_id, driver_options)
+    vehicle_names = importer.values_at(:vehicle_id)
+    vehicles = Vehicle.where(name: vehicle_names)
+    vehicle_options = Hash[*vehicles.pluck(:name, :id).flatten]
+    importer.batch_replace(:vehicle_id, vehicle_options)
+    
+  }
   form do |f|
     f.inputs do
       f.input :booking_time, as: :date_time_picker
