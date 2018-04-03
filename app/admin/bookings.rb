@@ -79,7 +79,7 @@ ActiveAdmin.register Booking do
       f.input :driver_food_accomodation
     end
     f.inputs "Ride Details" do
-      f.input :ride_type, collection: ["Continous", "Trip"], selected: "Continous"
+      f.input :ride_type, collection: ["Continous", "Trip"], selected: object.ride_type || "Continous"
       # update from requirement
       f.input :ride_start_point
       f.input :ride_reporting_time, as: :date_time_picker
@@ -89,7 +89,7 @@ ActiveAdmin.register Booking do
       f.input :ride_touch_points_location
       f.input :ride_end_point
       f.input :ride_no_of_passengers
-      f.input :driver, selected: Driver.find_by_name("Unassigned")&.id
+      f.input :driver, selected: object.driver&.id || Driver.find_by_name("Unassigned")&.id
       f.input :ride_agency
       f.input :ride_driver_transport_start_medium
       f.input :ride_driver_transport_start_amount
