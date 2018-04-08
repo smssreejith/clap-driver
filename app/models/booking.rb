@@ -18,15 +18,15 @@ class Booking < ApplicationRecord
       self.driver_payment = self.after_expense_trip
       self.clap_share = 0
     when "Slab"
-      share = if driver.slab.slab_1_to.present? and self.after_expense_trip.to_i > driver.slab.slab_1_from.to_i and self.after_expense_trip.to_i < driver.slab.slab_1_to.to_i
+      share = if driver.slab.slab_1_to.present? and self.after_expense_trip.to_i >= driver.slab.slab_1_from.to_i and self.after_expense_trip.to_i <= driver.slab.slab_1_to.to_i
                 (driver.slab.slab_1_amount * self.after_expense_trip) / 100
-              elsif driver.slab.slab_2_to.present? and self.after_expense_trip.to_i > driver.slab.slab_2_from.to_i and self.after_expense_trip.to_i < driver.slab.slab_2_to.to_i
+              elsif driver.slab.slab_2_to.present? and self.after_expense_trip.to_i >= driver.slab.slab_2_from.to_i and self.after_expense_trip.to_i <= driver.slab.slab_2_to.to_i
                 (driver.slab.slab_2_amount * self.after_expense_trip) / 100
-              elsif driver.slab.slab_3_to.present? and self.after_expense_trip.to_i > driver.slab.slab_3_from.to_i and self.after_expense_trip.to_i < driver.slab.slab_3_to.to_i
+              elsif driver.slab.slab_3_to.present? and self.after_expense_trip.to_i >= driver.slab.slab_3_from.to_i and self.after_expense_trip.to_i <= driver.slab.slab_3_to.to_i
                 (driver.slab.slab_3_amount * self.after_expense_trip) / 100
-              elsif driver.slab.slab_4_to.present? and self.after_expense_trip.to_i > driver.slab.slab_4_from.to_i and self.after_expense_trip.to_i < driver.slab.slab_4_to.to_i
+              elsif driver.slab.slab_4_to.present? and self.after_expense_trip.to_i >= driver.slab.slab_4_from.to_i and self.after_expense_trip.to_i <= driver.slab.slab_4_to.to_i
                 (driver.slab.slab_4_amount * self.after_expense_trip) / 100
-              elsif driver.slab.slab_5_to.present? and self.after_expense_trip.to_i > driver.slab.slab_5_from.to_i and self.after_expense_trip.to_i < driver.slab.slab_5_to.to_i
+              elsif driver.slab.slab_5_to.present? and self.after_expense_trip.to_i >= driver.slab.slab_5_from.to_i and self.after_expense_trip.to_i <= driver.slab.slab_5_to.to_i
                 (driver.slab.slab_5_amount * self.after_expense_trip) / 100
               end
       self.agency_share = share
