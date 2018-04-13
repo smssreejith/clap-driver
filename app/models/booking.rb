@@ -17,6 +17,14 @@ class Booking < ApplicationRecord
       self.agency_share = self.after_expense_trip
       self.driver_payment = self.after_expense_trip
       self.clap_share = 0
+    when "Salaried"
+      self.agency_share = self.after_expense_trip
+      self.driver_payment = self.after_expense_trip
+      self.clap_share = 0
+    when "Fixed per ride"
+      self.agency_share = self.after_expense_trip
+      self.driver_payment = self.after_expense_trip
+      self.clap_share = 0
     when "Slab"
       share = if driver.slab.slab_1_to.present? and self.after_expense_trip.to_i >= driver.slab.slab_1_from.to_i and self.after_expense_trip.to_i <= driver.slab.slab_1_to.to_i
                 (driver.slab.slab_1_amount * self.after_expense_trip) / 100
