@@ -72,7 +72,7 @@ Driver.create([
     age: "33",
     contact_number: "9845794833",
     agency: clap_agency,
-    plan: "Fixed per rider",
+    plan: "Fixed per ride",
     daily_charge: "100",
     slab: Slab.find_by_name("None"),
   },
