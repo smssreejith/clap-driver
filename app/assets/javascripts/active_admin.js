@@ -66,7 +66,9 @@ $(document).on("change","#booking_ride_start, #booking_ride_end, #booking_pre_ri
         $("#booking_on_ride_amount").val(diff * 100);
       }
       diff = diff + ( parseInt($("#booking_pre_ride_duration").val()) || 0) + ( parseInt($("#booking_post_ride_duration").val()) || 0);
-      if (diff > 7){
+      var ride_start = new Date($("#booking_ride_start").val().replace(/-/g,"/"));
+      var ride_start_two = new Date($("#booking_ride_start").val().split(" ")[0] + " " + "14:00:00");
+      if (diff > 7 && ride_start_two > ride_start){
         var discount_minus = ((parseInt(diff/12)) * 200);
         rem = diff % 12;
         var more = 0;
