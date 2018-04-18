@@ -27,17 +27,16 @@ $(document).on("change","#booking_ride_start, #booking_ride_end, #booking_pre_ri
       var ride_start_six = new Date($("#booking_ride_start").val().split(" ")[0] + " " + "18:00:00");
       ride_start_mid.setDate(ride_start_mid.getDate() + 1);
       ride_start_mid.setHours(0,0,0,0);
-      var ride_start_mid = new Date($("#booking_ride_start").val().split(" ")[0] + " " + "00:00:00");
-      var ride_end_mid = new Date($("#booking_ride_start").val().split(" ")[0] + " " + "00:00:00");
+      var ride_end_mid = new Date($("#booking_ride_end").val().split(" ")[0] + " " + "00:00:00");
       var ride_end_ten = new Date($("#booking_ride_end").val().split(" ")[0] + " " + "22:00:00");
       var ride_end_five = new Date($("#booking_ride_end").val().split(" ")[0] + " " + "05:00:00");
       if (ride_start < ride_start_six) {
         var pre_amount = 1000;
       } else {
-        diff = ( ride_start_mid - ride_start ) / 1000 / 60 / 60;
+        diff = ( ride_start_mid - ride_start) / 1000 / 60 / 60;
         var pre_amount = diff * 100;
       }
-      var trip_diff = (ride_end_mid - ride_start_mid) /60 / 60 / 24;
+      var trip_diff = (ride_end_mid - ride_start_mid) / 1000 /60 / 60 / 24;
       var trip_amount = (trip_diff + 1) * 1000; 
       if (ride_end > ride_end_five && ride_end < ride_end_ten) {
         var post_amount = 1000;
