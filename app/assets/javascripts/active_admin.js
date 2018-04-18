@@ -74,6 +74,8 @@ $(document).on("change","#booking_ride_start, #booking_ride_end, #booking_pre_ri
         if (rem > 7)
           more = 100;
         $("#booking_discount").val(discount_minus + more );
+      } else {
+        $("#booking_discount").val(0);
       }
     }
   }
