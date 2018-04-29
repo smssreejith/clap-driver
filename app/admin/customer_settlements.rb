@@ -3,9 +3,7 @@ ActiveAdmin.register CustomerSettlement do
     selectable_column
     column :id
     column :customer
-    column :amount do |amt|
-      amt.amount&.abs
-    end
+    column :amount
     column "TO" do |settlement|
       if settlement.amount.to_i < 0
         message = "Customer"

@@ -3,9 +3,7 @@ ActiveAdmin.register DriverSettlement do
     selectable_column
     column :id
     column :driver
-    column :amount do |amt|
-      amt.amount&.abs
-    end
+    column :amount
     column "TO" do |settlement|
       if settlement.amount.to_i > 0
         message = "Driver"
